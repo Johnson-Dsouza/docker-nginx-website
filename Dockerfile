@@ -1,22 +1,12 @@
 # Pull ubuntu base image
-FROM ubuntu:latest
+FROM nginx:latest
 
-USER root
+# Copy static-site-nginx to /var/www
+COPY static-site-nginx /var/www/
 
-RUN apt-get update
-RUN apt-get install -y nginx
+# Create sites-enabled directory 
+# copy nginx.cnnf
+RUN mkdir sites-enabled
+COPY server /etc/nginx/sites-enabled
 
-# Remove the default Nginx configuration file
-RUN rm -rf /etc/nginx/nginx.conf
-
-# Copy custom configuration file from the current directory
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# COPY static-site-nginx to /var/www/
-COPY static-site-nginx /var/www/static-site-nginx
-
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-
-EXPOSE 80
-
-CMD service nginx start
+CMD service nginx restart
