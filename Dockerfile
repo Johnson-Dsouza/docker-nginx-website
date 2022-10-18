@@ -9,4 +9,4 @@ COPY static-site-nginx /var/www/
 RUN mkdir sites-enabled
 COPY server /etc/nginx/sites-enabled
 
-CMD service nginx restart
+#CMD service nginx restart
